@@ -1,0 +1,3 @@
+rootProject.name = "SLT Application"
+include ':app'
+include ':openCVLibrary3410'
