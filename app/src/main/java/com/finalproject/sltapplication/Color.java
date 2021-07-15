@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Color {
 
-    ArrayList<ColorName> colorNameArrayList = new ArrayList<ColorName>();
+    ArrayList<ColorName> colorNameArrayList = new ArrayList<>();
 
     public Color(){
 
@@ -184,7 +184,7 @@ public class Color {
         }
 
         public int getMSE(int pixR, int pixG, int pixB){
-            return (int) (((pixR-r)*(pixR-r) + (pixG-g)*(pixG-g) + (pixB-b)*(pixB-b))/3);
+            return (((pixR-r)*(pixR-r) + (pixG-g)*(pixG-g) + (pixB-b)*(pixB-b))/3);
         }
 
         public String getColorName(){
