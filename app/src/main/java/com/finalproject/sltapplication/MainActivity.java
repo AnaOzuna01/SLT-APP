@@ -16,6 +16,9 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.finalproject.sltapplication.model.API;
+import com.finalproject.sltapplication.model.Clothes;
+
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.LoaderCallbackInterface;
@@ -27,7 +30,14 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
@@ -87,7 +97,37 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         cameraBridgeViewBase = findViewById(R.id.camView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener((CameraBridgeViewBase.CvCameraViewListener) this);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        API api = retrofit.create(API.class);
+        Call<List<Clothes>> call = api.getClothes();
+        call.enqueue(new Callback<List<Clothes>>() {
+            @Override
+            public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
+
+                List<Clothes> clothesList = response.body();
+                StringBuilder stringBuilder = new StringBuilder();
+                assert clothesList != null;
+                for (Clothes clothes: clothesList){
+                    stringBuilder.append(clothes.getClothesName()).append("\n");
+                }
+
+                Toast.makeText(getApplicationContext(), stringBuilder.toString(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Clothes>> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 
     public void onPause() {
         super.onPause();
