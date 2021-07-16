@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">SLT Application</string>
-    <string name="txtCoordinates">Coordinates</string>
-    <string name="txtColor">Color</string>
+    <string name="txtCoordinates">X = , Y = </string>
+    <string name="txtColor">Color = </string>
 </resources>
