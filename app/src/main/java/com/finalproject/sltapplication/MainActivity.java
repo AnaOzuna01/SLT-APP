@@ -30,7 +30,7 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
     final int CAMERA_PERMISSION_REQUEST_ID = 1001;
     CameraBridgeViewBase cameraBridgeViewBase;
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         public void onManagerConnected(final int status) {
             if (status == LoaderCallbackInterface.SUCCESS) {
                 cameraBridgeViewBase.enableView();
+                cameraBridgeViewBase.setOnTouchListener(MainActivity.this);
             } else {
                 super.onManagerConnected(status);
             }
@@ -197,5 +198,10 @@ public class MainActivity extends AppCompatActivity {
         Mat mHSV = new Mat(1, 1, CvType.CV_8UC3, colorHSV);
         Imgproc.cvtColor(mHSV, mRGBA, Imgproc.COLOR_HSV2BGR_FULL, 4);
         return new Scalar((mRGBA.get(0, 0)));
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
     }
 }
