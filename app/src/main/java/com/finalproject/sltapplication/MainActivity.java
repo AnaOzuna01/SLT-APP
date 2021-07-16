@@ -5,12 +5,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     double x = -1;
     double y = -1;
 
-    private BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
+    private final BaseLoaderCallback loaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(final int status) {
             if (status == LoaderCallbackInterface.SUCCESS) {
@@ -76,19 +75,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAMERA_PERMISSION_REQUEST_ID);
         }
 
-        txtCoordinates = (TextView) findViewById(R.id.txtCoordinates);
-        txtColor = (TextView) findViewById(R.id.txtColor);
+        txtCoordinates = findViewById(R.id.txtCoordinates);
+        txtColor = findViewById(R.id.txtColor);
         color = new Color();
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (status != textToSpeech.ERROR){
-                    textToSpeech.setLanguage(Locale.ENGLISH);
-                }
+        textToSpeech = new TextToSpeech(getApplicationContext(), status -> {
+            if (status != TextToSpeech.ERROR){
+                textToSpeech.setLanguage(Locale.ENGLISH);
             }
         });
 
-        cameraBridgeViewBase = (CameraBridgeViewBase) findViewById(R.id.camView);
+        cameraBridgeViewBase = findViewById(R.id.camView);
         cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener((CameraBridgeViewBase.CvCameraViewListener) this);
     }
@@ -139,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         return matRGBA;
     }
 
+    @SuppressLint("SetTextI18n")
     public boolean onDisplay(View view, MotionEvent motionEvent){
 
         int rows = matRGBA.rows();
@@ -159,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         if((x < 0) || (y < 0) || (x > cols) || (y > rows)) return false;
 
-        txtCoordinates.setText("X: " + Double.valueOf(x) + ", Y: " + Double.valueOf(y));
+        txtCoordinates.setText("X: " + x + ", Y: " + y);
 
         Rect rectDisplay = new Rect();
 
@@ -200,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         return new Scalar((mRGBA.get(0, 0)));
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return false;
