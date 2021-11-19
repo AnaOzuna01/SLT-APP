@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Dashboard">
+
+    <ImageView
+        android:id="@+id/imageViewDash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/home" />
+
+    <TextView
+        android:id="@+id/home_text"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAlignment="center"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        android:textColor="@color/dark_orange"
+        android:textAllCaps="true"
+        android:text="SLT APP">
+    </TextView>
+
+        <ImageView
+            android:id="@+id/imgViewColorPicker"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/eye"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/fashion_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/Purplish_blue"
+        android:background="@drawable/custom_btn"
+        app:backgroundTint="@color/blue"
+        android:textAllCaps="false"
+        android:text="@string/btn_open_fashion">
+    </Button>
+
+    <Button
+        android:id="@+id/ocr_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="430dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/Purplish_blue"
+        android:background="@drawable/custom_btn"
+        app:backgroundTint="@color/blue"
+        android:textAllCaps="false"
+    android:text="@string/btn_open_ocr">
+    </Button>
+
+    <Button
+        android:id="@+id/color_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="530dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textColor="@color/Purplish_blue"
+        android:background="@drawable/custom_btn"
+        app:backgroundTint="@color/blue"
+        android:textAllCaps="false"
+        android:text="@string/btn_open_color">
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

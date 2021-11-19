@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/screens"
+    android:orientation="vertical"
+    tools:context=".Color">
+
+
+    <ImageView
+        android:id="@+id/imgViewColorPicker"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:src="@drawable/third_picker"/>
+
+    <TextView
+        android:id="@+id/txtColorPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEX: \nRGB:"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtColorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <View
+        android:id="@+id/vwDisplayColor"
+        android:layout_width="match_parent"
+        android:layout_height="95dp"/>
+
+
+</LinearLayout>
