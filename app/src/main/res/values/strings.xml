@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">SLT Application</string>
-    <string name="txtCoordinates">X = , Y = </string>
-    <string name="txtColor">Color = </string>
+    <string name="txt_home">Home</string>
+    <string name="btn_open_fashion">Fashion</string>
+    <string name="btn_open_ocr">OCR</string>
+    <string name="btn_open_color">Color</string>
+    <string name="image_view_info">image_view_info</string>
+    <string name="btn_go_back">Go Back!</string>
+
+    <string name="app_name">SLT</string>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 </resources>
