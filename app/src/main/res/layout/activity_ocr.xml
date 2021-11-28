@@ -14,6 +14,7 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/scanner"
         android:id="@+id/captureImageView"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

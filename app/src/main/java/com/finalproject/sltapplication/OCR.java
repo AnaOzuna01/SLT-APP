@@ -1,5 +1,6 @@
 package com.finalproject.sltapplication;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -7,7 +8,10 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -34,6 +38,7 @@ import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.TextRecognizerOptions;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import static android.Manifest.permission.CAMERA;
@@ -50,6 +55,8 @@ public class OCR extends AppCompatActivity {
 
     FirebaseTranslator englishTranslator;
 
+    private final int REQ_CODE_SPEECH_INPUT = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +71,6 @@ public class OCR extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 detectText();
-                translateLanguage();
             }
         });
 
@@ -78,6 +84,27 @@ public class OCR extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public boolean onTouchEvent(MotionEvent e){
+        Log.e("Touching", "Touching the screen");
+        startVoiceInput();
+        return true;
+    }
+
+    public void startVoiceInput(){
+        Intent intentVoice = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intentVoice.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intentVoice.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ES");
+        intentVoice.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ES");
+        intentVoice.putExtra(RecognizerIntent.EXTRA_ONLY_RETURN_LANGUAGE_PREFERENCE,"ES");
+        intentVoice.putExtra(RecognizerIntent.EXTRA_PROMPT, "Hola, Como te puedo ayudar");
+        try {
+            startActivityForResult(intentVoice, REQ_CODE_SPEECH_INPUT);
+        }catch (ActivityNotFoundException a){
+            Toast.makeText(getApplicationContext(), "Lo sentimos! Tu dispositivo no suporta comando por voz.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean checkPermission(){
@@ -121,6 +148,27 @@ public class OCR extends AppCompatActivity {
             captureImage.setImageBitmap(imageBitmap);
 
         }
+
+        if (requestCode == REQ_CODE_SPEECH_INPUT){
+            if (resultCode == RESULT_OK){
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String Txt = result.get(0);
+
+                if (result.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Lo sentimos! No entendi nada. Vuelva a repetir.",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                if(Txt.equals("Volver atras"))
+                {
+                    Intent intentBack = new Intent(this, Dashboard.class);
+                    startActivity(intentBack);
+
+                }
+            }
+
+        }
     }
 
     private void detectText() {
@@ -150,8 +198,10 @@ public class OCR extends AppCompatActivity {
                             public void onInit(int status) {
                                 Locale spanish = new Locale("es", "ES");
                                 if(status==TextToSpeech.SUCCESS){
+                                    translateLanguage();
                                     tts.setLanguage(spanish);
                                     tts.setSpeechRate(1.0f);
+                                    tts.speak(resultText.getText().toString(), TextToSpeech.QUEUE_ADD, null);
                                     tts.speak(resultText.getText().toString(), TextToSpeech.QUEUE_ADD, null);
 
                                 }
@@ -185,7 +235,7 @@ public class OCR extends AppCompatActivity {
         englishTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(@NonNull Void unused) {
-                Toast.makeText(OCR.this, "Please wait language modal is beign downloaded.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OCR.this, "Please wait language modal is being downloaded.", Toast.LENGTH_SHORT).show();
                 translateLanguageInput(input);
             }
         }).addOnFailureListener(new OnFailureListener() {

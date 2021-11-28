@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.finalproject.sltapplication">
 
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-feature android:name="android.hardware.front"/>
-    <uses-feature android:name="android.hardware.camera.front.autofocus"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.front.autofocus" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -17,25 +20,39 @@
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@drawable/eye"
-        android:roundIcon="@drawable/eye"
         android:label="@string/app_name"
+        android:roundIcon="@drawable/eye"
         android:supportsRtl="true"
         android:theme="@style/Theme.SLTApplication">
-
+<!--        <meta-data-->
+<!--            android:name="com.google.android.actions"-->
+<!--            android:resource="@xml/actions" />-->
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity android:name=".Fashion"/>
-        <activity android:name=".Color"/>
-        <activity android:name=".Dashboard"/>
-        <activity android:name=".OCR"/>
-        <activity android:name=".Splash"
+        <activity android:name=".Fashion" />
+        <activity android:name=".Color" />
+        <activity android:name=".Dashboard" />
+        <activity android:name=".OCR" />
+        <activity
+            android:name=".Splash"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+<!--            <intent-filter-->
+<!--                android:autoVerify="true"-->
+<!--                tools:targetApi="m">-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data android:scheme="https" android:host="sltapplication.page.link" />-->
+<!--                <data android:scheme="app" android:host="open.my.slt" />-->
+<!--                <data android:scheme="http" />-->
+<!--            </intent-filter>-->
+
         </activity>
     </application>
 
