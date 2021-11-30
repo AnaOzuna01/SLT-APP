@@ -1,16 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Fashion">
 
-    <org.opencv.android.JavaCameraView
-        android:id="@+id/javaColorPicker"
+    <ImageView
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/recognition"
+        android:id="@+id/captureImageView"/>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </org.opencv.android.JavaCameraView>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/captureImageView"
+        android:id="@+id/detectedImage"
+        android:textColor="@color/blue"
+        android:text=""
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="4dp"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/captureImageView"
+        android:id="@+id/confidenceTxt"
+        android:textColor="@color/white"
+        android:text=""
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="4dp"/>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/captureImageView"
+        android:id="@+id/colorTxt"
+        android:textColor="@color/white"
+        android:text=""
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="4dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="80dp"
+        android:text="Snap"
+        android:textColor="@color/Purplish_blue"
+        android:layout_below="@id/detectedImage"
+        android:background="@drawable/custom_btn"
+        app:backgroundTint="@color/blue"
+        android:textAllCaps="false"
+        android:id="@+id/snapBtn"/>
+
+</RelativeLayout>

@@ -80,6 +80,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.rmtheis:tess-two:9.0.0'
+
+    implementation 'com.android.support:palette-v7:30.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
