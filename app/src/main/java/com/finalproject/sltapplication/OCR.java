@@ -160,7 +160,7 @@ public class OCR extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                if(Txt.equals("Volver atras"))
+                if(Txt.equals("Volver atrás"))
                 {
                     Intent intentBack = new Intent(this, Dashboard.class);
                     startActivity(intentBack);
