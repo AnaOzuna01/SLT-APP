@@ -105,6 +105,19 @@ public class Dashboard extends AppCompatActivity {
                     Intent intentOpenOCR = new Intent(getApplicationContext(), OCR.class);
                     startActivity(intentOpenOCR);
                 }
+
+                if(Txt.equals("sugerir ropa"))
+                {
+                    Intent intentOpenClothesSuggestionMenu = new Intent(this, ClothesSuggestion.class);
+                    startActivity(intentOpenClothesSuggestionMenu);
+
+                }
+                if(Txt.equals("sugerir color"))
+                {
+                    Intent intentOpenColorSuggestionMenu = new Intent(this, ColorSuggestion.class);
+                    startActivity(intentOpenColorSuggestionMenu);
+
+                }
             }
 
         }
@@ -124,4 +137,5 @@ public class Dashboard extends AppCompatActivity {
         Intent intentColor = new Intent(this, Color.class);
         startActivity(intentColor);
     }
+
 }

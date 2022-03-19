@@ -171,9 +171,8 @@ public class Fashion extends AppCompatActivity {
                 }
             }
 
-            String[] classes = {"Abrigo", "Bermuda", "Camisa Manga Corta", "Camisa Manga Larga", "Camiseta", "Chaqueta",
-                    "Corbata", "Jeans", "Pantalon Casual", "Pantalon Deportivo", "Poloche", "Tenis", "Tenis Adidas",
-                    "Tenis Nike", "Zapatos"};
+            String[] classes = {"Abrigo", "Bermuda", "Camisa", "Camiseta", "Chancletas", "Chaqueta",
+                    "Corbata", "Correa", "Gorras", "Pantalon Jeans", "Medias", "Pantalon Casual", "Pantalon Deportivo", "Poloche", "Tenis", "Zapatos"};
 
             Log.d("CLASSIFY", classes[maxPos]);
             Log.d("CLASSIFY", String.valueOf(confidences[maxPos]));

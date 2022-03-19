@@ -35,6 +35,8 @@
         <activity android:name=".Color" />
         <activity android:name=".Dashboard" />
         <activity android:name=".OCR" />
+        <activity android:name=".ClothesSuggestion" />
+        <activity android:name=".ColorSuggestion" />
         <activity
             android:name=".Splash"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen">
