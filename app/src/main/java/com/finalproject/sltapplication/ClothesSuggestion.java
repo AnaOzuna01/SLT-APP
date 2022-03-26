@@ -131,6 +131,12 @@ public class ClothesSuggestion extends AppCompatActivity {
                     });
 
                 }
+
+                if (Txt.equals("Volver atrás")) {
+                    Intent intentBack = new Intent(this, Dashboard.class);
+                    startActivity(intentBack);
+
+                }
             }
 
         }

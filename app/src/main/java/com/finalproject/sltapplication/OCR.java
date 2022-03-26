@@ -12,7 +12,6 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -64,26 +63,26 @@ public class OCR extends AppCompatActivity {
 
         captureImage = findViewById(R.id.captureImageView);
         resultText = findViewById(R.id.detectedImage);
-        snapBtn = findViewById(R.id.snapBtn);
-        detectBtn = findViewById(R.id.detectBtn);
+//        snapBtn = findViewById(R.id.snapBtn);
+//        detectBtn = findViewById(R.id.detectBtn);
 
-        detectBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                detectText();
-            }
-        });
+//        detectBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                detectText();
+//            }
+//        });
 
-        snapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkPermission()){
-                    captureImage();
-                }else{
-                    requestPermission();
-                }
-            }
-        });
+//        snapBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(checkPermission()){
+//                    captureImage();
+//                }else{
+//                    requestPermission();
+//                }
+//            }
+//        });
     }
 
     public boolean onTouchEvent(MotionEvent e){
@@ -160,12 +159,28 @@ public class OCR extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
+                if(Txt.equals("Capturar") || Txt.equals("capturar"))
+                {
+                    if(checkPermission()){
+                        captureImage();
+                    }else{
+                        requestPermission();
+                    }
+
+                }
+
                 if(Txt.equals("Volver atrás"))
                 {
                     Intent intentBack = new Intent(this, Dashboard.class);
                     startActivity(intentBack);
 
                 }
+
+                if(Txt.equals("Detectar") || Txt.equals("detectar"))
+                {
+                    detectText();
+                }
+
             }
 
         }

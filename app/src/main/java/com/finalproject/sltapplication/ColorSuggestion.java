@@ -73,7 +73,7 @@ public class ColorSuggestion extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                if(Txt.equals("color frio"))
+                if(Txt.equals("color frío"))
                 {
                     String[] myArrayFrio_1 = new String[]{"Verde", "Turquesa"};
                     String[] myArrayFrio_2 = new String[]{"Violeta", "Azul"};
@@ -100,7 +100,7 @@ public class ColorSuggestion extends AppCompatActivity {
 
                 }
 
-                if(Txt.equals("color calido"))
+                if(Txt.equals("color cálido"))
                 {
                     String[] myArrayCalido_1 = new String[]{"Amarillo", "Naranja"};
                     String[] myArrayCalido_2 = new String[]{"Vino", "Rojo"};
@@ -127,7 +127,7 @@ public class ColorSuggestion extends AppCompatActivity {
 
                 }
 
-                if(Txt.equals("color complementarios"))
+                if(Txt.equals("color complementario"))
                 {
                     String[] myArrayComplementarios_1 = new String[]{"Verde", "Turquesa", "Azul"};
                     String[] myArrayComplementarios_2 = new String[]{"Rojo", "Naranja", "Vino"};
@@ -153,7 +153,12 @@ public class ColorSuggestion extends AppCompatActivity {
                     });
 
                 }
-                
+
+                if (Txt.equals("Volver atrás")) {
+                    Intent intentBack = new Intent(this, Dashboard.class);
+                    startActivity(intentBack);
+
+                }
 
             }
 

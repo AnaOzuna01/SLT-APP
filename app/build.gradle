@@ -23,7 +23,11 @@ android {
 
         python {
             buildPython "C:/Users/NOTEBOOK/AppData/Local/Programs/Python/Python39/python.exe"
+            pip {
+                install "requests"
+            }
         }
+
 
         sourceSets {
             main {

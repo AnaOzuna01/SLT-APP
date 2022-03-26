@@ -4,52 +4,76 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Dashboard extends AppCompatActivity {
 
-    private Button ocrButton;
-    private Button fashionButton;
-    private Button colorButton;
+//    private Button ocrButton;
+//    private Button fashionButton;
+//    private Button colorButton;
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
+
+    TextToSpeech tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        ocrButton = (Button) findViewById(R.id.ocr_button);
-        ocrButton.setOnClickListener(new View.OnClickListener() {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String resultText = "Toque la pantalla y proceda a decir comando para navegar.";
+
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
-            public void onClick(View v) {
-                openOCR();
+            public void onInit(int status) {
+                Locale spanish = new Locale("es", "ES");
+                if(status==TextToSpeech.SUCCESS){
+                    tts.setLanguage(spanish);
+                    tts.setSpeechRate(1.0f);
+                    tts.speak(resultText, TextToSpeech.QUEUE_ADD, null);
+                    tts.speak(resultText, TextToSpeech.QUEUE_ADD, null);
+
+                }
             }
         });
 
-        fashionButton = (Button) findViewById(R.id.fashion_button);
-        fashionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFashion();
-            }
-        });
+//        ocrButton = (Button) findViewById(R.id.ocr_button);
+//        ocrButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openOCR();
+//            }
+//        });
 
-        colorButton = (Button) findViewById(R.id.color_button);
-        colorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openColorPicker();
-            }
-        });
+//        fashionButton = (Button) findViewById(R.id.fashion_button);
+//        fashionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openFashion();
+//            }
+//        });
+
+//        colorButton = (Button) findViewById(R.id.color_button);
+//        colorButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                openColorPicker();
+//            }
+//        });
 
     }
 

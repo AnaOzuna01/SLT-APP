@@ -30,32 +30,32 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="4dp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Snap"
-        android:textColor="@color/Purplish_blue"
-        android:layout_below="@id/detectedImage"
-        android:background="@drawable/custom_btn"
-        app:backgroundTint="@color/blue"
-        android:textAllCaps="false"
-        android:id="@+id/snapBtn"/>
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Snap"-->
+<!--        android:textColor="@color/Purplish_blue"-->
+<!--        android:layout_below="@id/detectedImage"-->
+<!--        android:background="@drawable/custom_btn"-->
+<!--        app:backgroundTint="@color/blue"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:id="@+id/snapBtn"/>-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Detect"
-        android:textColor="@color/Purplish_blue"
-        android:layout_below="@id/snapBtn"
-        android:background="@drawable/custom_btn"
-        app:backgroundTint="@color/blue"
-        android:textAllCaps="false"
-        android:id="@+id/detectBtn"/>
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Detect"-->
+<!--        android:textColor="@color/Purplish_blue"-->
+<!--        android:layout_below="@id/snapBtn"-->
+<!--        android:background="@drawable/custom_btn"-->
+<!--        app:backgroundTint="@color/blue"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:id="@+id/detectBtn"/>-->
 
 </RelativeLayout>

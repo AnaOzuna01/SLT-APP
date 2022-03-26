@@ -11,18 +11,28 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.palette.graphics.Palette;
 
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.finalproject.sltapplication.ml.Model;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.common.modeldownload.FirebaseModelDownloadConditions;
+import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslateLanguage;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslator;
+import com.google.firebase.ml.naturallanguage.translate.FirebaseTranslatorOptions;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
@@ -34,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import static android.Manifest.permission.CAMERA;
+
 public class Fashion extends AppCompatActivity {
 
     private ImageView captureImage;
@@ -48,6 +59,8 @@ public class Fashion extends AppCompatActivity {
     private final int REQ_CODE_SPEECH_INPUT = 100;
     int imageSize = 224;
 
+
+    FirebaseTranslator englishTranslator;
     TextToSpeech tts;
 
     @Override
@@ -57,22 +70,22 @@ public class Fashion extends AppCompatActivity {
 
         captureImage = findViewById(R.id.captureImageView);
         resultText = findViewById(R.id.detectedImage);
-        snapBtn = findViewById(R.id.snapBtn);
+//        snapBtn = findViewById(R.id.snapBtn);
         confidenceText = findViewById(R.id.confidenceTxt);
         colorText = findViewById(R.id.colorTxt);
 //        captureImage.setImageBitmap(imageBitmap);
 
-        snapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkPermission()) {
-                    captureImage();
-                } else {
-                    requestPermission();
-                }
-            }
-
-        });
+//        snapBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkPermission()) {
+//                    captureImage();
+//                } else {
+//                    requestPermission();
+//                }
+//            }
+//
+//        });
 
     }
 
@@ -203,7 +216,24 @@ public class Fashion extends AppCompatActivity {
                     String hex = "#" + Integer.toHexString(color);
                     Log.d("CLASSIFY", hex);
                     String colorTxt = "";
-                    String name = getRGBName(hex);
+
+                    String subStringName = hex.substring(3,9);
+
+                    String url = "https://www.thecolorapi.com/id?hex="+subStringName;
+                    if( ! Python.isStarted())
+                    {
+                        Python.start(new AndroidPlatform(Fashion.this));
+                    }
+
+                    Python python = Python.getInstance();
+                    PyObject pyObject = python.getModule("colorAPI");
+
+                    PyObject obj = pyObject.callAttr("callAPI", subStringName);
+
+                    String name = "";
+                    Log.e("COLORPY", obj.toString());
+                    name = obj.toString();
+
                     colorTxt += String.format("Color: %s", name);
                     colorText.setText(colorTxt);
                     Log.d("CLASSIFY", String.valueOf(name));
@@ -212,6 +242,7 @@ public class Fashion extends AppCompatActivity {
                         public void onInit(int status) {
                             Locale spanish = new Locale("es", "ES");
                             if(status==TextToSpeech.SUCCESS){
+                                translateLanguage();
                                 tts.setLanguage(spanish);
                                 tts.setSpeechRate(1.0f);
                                 tts.speak(colorText.getText().toString(), TextToSpeech.QUEUE_ADD, null);
@@ -226,11 +257,85 @@ public class Fashion extends AppCompatActivity {
         } catch (IOException e) {
             // TODO Handle the exception
         }
-
     }
+
+    private void translateLanguage(){
+        FirebaseTranslatorOptions options = new FirebaseTranslatorOptions.Builder()
+                .setSourceLanguage(FirebaseTranslateLanguage.EN)
+                .setTargetLanguage(FirebaseTranslateLanguage.ES)
+                .build();
+        englishTranslator = FirebaseNaturalLanguage.getInstance().getTranslator(options);
+
+        String text = resultText.getText().toString();
+        downloadModal(text);
+    }
+
+    private void downloadModal(String input){
+        FirebaseModelDownloadConditions conditions = new FirebaseModelDownloadConditions.Builder().requireWifi().build();
+        englishTranslator.downloadModelIfNeeded(conditions).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(@NonNull Void unused) {
+                Toast.makeText(Fashion.this, "Please wait language modal is being downloaded.", Toast.LENGTH_SHORT).show();
+                translateLanguageInput(input);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Fashion.this, "Fail to download modal.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void translateLanguageInput(String input){
+        englishTranslator.translate(input).addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(@NonNull String s) {
+                resultText.setText(s);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Fashion.this, "Fail to translate.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == REQ_CODE_SPEECH_INPUT){
+            if (resultCode == RESULT_OK){
+                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                String Txt = result.get(0);
+
+                if (result.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(), "Lo sentimos! No entendi nada. Vuelva a repetir.",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                if(Txt.equals("Capturar") || Txt.equals("capturar"))
+                {
+                    if(checkPermission()){
+                        captureImage();
+                    }else{
+                        requestPermission();
+                    }
+
+                }
+
+                if(Txt.equals("Volver atrás"))
+                {
+                    Intent intentBack = new Intent(this, Dashboard.class);
+                    startActivity(intentBack);
+
+                }
+
+            }
+
+        }
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
@@ -243,27 +348,11 @@ public class Fashion extends AppCompatActivity {
             classifyImage(imageBitmap);
 
 
-            if (requestCode == REQ_CODE_SPEECH_INPUT) {
-                if (resultCode == RESULT_OK) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    String Txt = result.get(0);
 
-                    if (result.size() == 0) {
-                        Toast.makeText(getApplicationContext(), "Lo sentimos! No entendi nada. Vuelva a repetir.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (Txt.equals("Volver atrás")) {
-                        Intent intentBack = new Intent(this, Dashboard.class);
-                        startActivity(intentBack);
-
-                    }
-                }
-
-            }
         }
 
     }
+
 
     public String getRGBName(String colorName){
 
